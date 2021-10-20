@@ -1,5 +1,42 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Alegreya Sans', sans-serif;
+    font-size: 20px;
+    text-align: justify;
+}
+
+body {
+    background-color: #FEFBFF;
+}
+
+h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 80px;
+}
+
+h2 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 30px;
+}
+
+a {
+    color: #9EC5E2;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 80px;
+}
+
+hr {
+    width: 350px;
+    height: 0.3em;
+    text-align: left;
+    margin: 0 auto 0 0;
+    background-color: #f06292;
+    margin-top: 0.5em;
+}
+
+img {
+    width: 150px;
+    margin-right: 1em;
 }

@@ -23,20 +23,11 @@ export default function ButtonAppBar() {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              onClick={toggleDrawer(true)}
-            >
-              <MenuIcon />
-            </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               News
             </Typography>
             <Button color="inherit">Login</Button>
+            <Button color="inherit">Cadastro</Button>
           </Toolbar>
         </AppBar>
       </Box>
@@ -50,15 +41,6 @@ export default function ButtonAppBar() {
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
-          <List>
-            <ListItem button key={'login'}>
-              <ListItemIcon><AccessAlarmIcon /></ListItemIcon>
-              <ListItemText>Login</ListItemText>
-            </ListItem>
-            <ListItem button key={'Cadastro'} >
-              <ListItemText>Cadastro</ListItemText>
-            </ListItem>
-          </List>
         </Box>
       </Drawer>
     </>
