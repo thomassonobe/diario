@@ -4,11 +4,11 @@ import Box from '@material-ui/core//Box';
 import Toolbar from '@material-ui/core//Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
-
+import { Drawer } from '@material-ui/core';
+import Logo from '../../../img/logo.png'
+import {
+  Link
+} from "react-router-dom";
 export default function ButtonAppBar() {
   const [open, setOpen] = React.useState(false)
   const toggleDrawer = (newOpen) => (event) => {
@@ -24,10 +24,16 @@ export default function ButtonAppBar() {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              News
+              <Link to="/">
+                <img src={Logo} sx={{ flexGrow: 1 }} alt="" />
+              </Link>
             </Typography>
-            <Button color="inherit">Login</Button>
-            <Button color="inherit">Cadastro</Button>
+            <Link to="/login">
+              <Button color="inherit">Login</Button>
+            </Link>
+            <Link to="/cadastro">
+              <Button color="inherit">Cadastro</Button>
+            </Link>
           </Toolbar>
         </AppBar>
       </Box>

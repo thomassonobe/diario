@@ -3,11 +3,13 @@ import Header from '../../shared/components/Header'
 import Container from '@material-ui/core/Container';
 import Gatinho from "../../img/hello.png"
 import { Button } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMeh, faSadTear, faMehBlank, faSmileBeam, faSmileWink } from '@fortawesome/free-solid-svg-icons'
 import { styled } from '@material-ui/styles';
 import './index.css'
 import Meh from '../../shared/components/Icons/Meh';
+import SadTear from '../../shared/components/Icons/SadTear';
+import MehBlank from '../../shared/components/Icons/MehBlank';
+import SmileBeam from '../../shared/components/Icons/SmileBeam';
+import SmileWink from '../../shared/components/Icons/SmileWink';
 
 const MyButton = styled(Button)({
   background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -26,10 +28,10 @@ const Home = () => {
       <Container>
         <br />
 
-        <img src={Gatinho} align="left" />
+        <img src={Gatinho} align="left" alt="" />
         <br />
         <h5>bem-vindo ao</h5>
-        <h1>diar.<a>io</a></h1>
+        <h1>diar.<span>io</span></h1>
 
         <hr />
         <br />
@@ -41,14 +43,13 @@ const Home = () => {
         <h2>Cores</h2>
 
         <br />
-        <Meh></Meh>
         <h2>Humores</h2>
         <div className="gridIcons">
-          <FontAwesomeIcon icon={faSadTear} color='#f06292' size="lg" />
-          <FontAwesomeIcon icon={faMeh} color='#9EC5E2' size="lg" />
-          <FontAwesomeIcon icon={faMehBlank} color='#C8A4E9' size="lg" />
-          <FontAwesomeIcon icon={faSmileBeam} color='#64b5f6' size="lg" />
-          <FontAwesomeIcon icon={faSmileWink} color='#A168F9' size="lg" />
+          <SadTear />
+          <Meh />
+          <MehBlank />
+          <SmileBeam />
+          <SmileWink />
         </div>
         <MyButton>Teste 1231</MyButton>
       </Container>

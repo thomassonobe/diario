@@ -5,7 +5,11 @@
 .gridIcons svg{
   margin-right: 0.5em;
 }
-
+span {
+  color: #9EC5E2;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 80px;
+}
 @media screen and (max-width: 600px) {
   .gridIcons {
       margin-left: 4em;
