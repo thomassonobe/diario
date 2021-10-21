@@ -3,8 +3,6 @@ import Header from '../../shared/components/Header'
 import Footer from '../../shared/components/Footer'
 import Container from '@material-ui/core/Container';
 import Gatinho from "../../img/hello.png"
-import { Button } from '@material-ui/core';
-import { styled } from '@material-ui/styles';
 import './index.css'
 import Meh from '../../shared/components/Icons/Meh';
 import SadTear from '../../shared/components/Icons/SadTear';
