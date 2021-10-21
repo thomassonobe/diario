@@ -6,9 +6,20 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Drawer } from '@material-ui/core';
 import Logo from '../../../img/logo.png'
-import {
-  Link
-} from "react-router-dom";
+import {Link} from "react-router-dom";
+import { height } from '@material-ui/system';
+import { styled } from '@material-ui/styles';
+
+const MyNavBar = styled(AppBar)({
+  background: '#7e57c2',
+  height: '3em'
+});
+
+const MyLink = styled(Link)({
+  color: 'white',
+  textDecoration: 'none'
+})
+
 export default function ButtonAppBar() {
   const [open, setOpen] = React.useState(false)
   const toggleDrawer = (newOpen) => (event) => {
@@ -21,21 +32,21 @@ export default function ButtonAppBar() {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <MyNavBar position="static">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               <Link to="/">
                 <img src={Logo} sx={{ flexGrow: 1 }} alt="" />
               </Link>
             </Typography>
-            <Link to="/login">
+            <MyLink to="/login">
               <Button color="inherit">Login</Button>
-            </Link>
-            <Link to="/cadastro">
+            </MyLink>
+            <MyLink to="/cadastro">
               <Button color="inherit">Cadastro</Button>
-            </Link>
+            </MyLink>
           </Toolbar>
-        </AppBar>
+        </MyNavBar>
       </Box>
       <Drawer
         open={open}

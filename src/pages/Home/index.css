@@ -1,27 +1,35 @@
-.gridIcons {
-  margin-top: 1.5em;
+.gridIcons svg {
+    margin-right: 0.5em;
+    margin-top: 0.5em;
 }
 
-.gridIcons svg{
-  margin-right: 0.5em;
-}
 span {
-  color: #9EC5E2;
-  font-family: 'Bebas Neue', cursive;
-  font-size: 80px;
-}
-@media screen and (max-width: 600px) {
-  .gridIcons {
-      margin-left: 4em;
-  }
+    color: #9EC5E2;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 80px;
 }
 
 .gridIcons svg {
-  transition: text-shadow 0.5s;
+    transition: text-shadow 0.5s;
 }
 
 .gridIcons svg:active,
 .gridIcons svg:hover {
-  text-decoration: none;
-  text-shadow: 0px 0px 10px whitesmoke;
+    text-decoration: none;
+    text-shadow: 0px 0px 10px whitesmoke;
+}
+
+footer {
+    background-color: #7e57c2;
+    height: 3em;
+    color: white;
+    text-align: center;
+    margin-top: 0.8em;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+footer p {
+    text-align: center;
 }

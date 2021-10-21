@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Header from '../../shared/components/Header'
+import Footer from '../../shared/components/Footer'
 import Container from '@material-ui/core/Container';
 import Gatinho from "../../img/hello.png"
 import { Button } from '@material-ui/core';
@@ -11,20 +12,10 @@ import MehBlank from '../../shared/components/Icons/MehBlank';
 import SmileBeam from '../../shared/components/Icons/SmileBeam';
 import SmileWink from '../../shared/components/Icons/SmileWink';
 
-const MyButton = styled(Button)({
-  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-  border: 0,
-  borderRadius: 3,
-  boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-  color: 'white',
-  height: 48,
-  padding: '0 30px',
-});
-
 const Home = () => {
   return (
     <>
-      <Header></Header>
+      <Header/>
       <Container>
         <br />
 
@@ -51,8 +42,9 @@ const Home = () => {
           <SmileBeam />
           <SmileWink />
         </div>
-        <MyButton>Teste 1231</MyButton>
       </Container>
+
+      <Footer/>
     </>
   );
 }
