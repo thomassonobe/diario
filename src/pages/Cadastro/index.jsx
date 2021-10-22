@@ -73,7 +73,8 @@ const Cadastro = () => {
 
                   <Button
                     variant="outlined"
-                    onClick={console.log(cadastro)}
+                    onClick={() => console.log(cadastro)}
+                    disabled={!cadastro.username || !cadastro.password}
                   >Cadastro</Button>
                 </CardContent>
               </Card>

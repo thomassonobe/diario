@@ -60,7 +60,11 @@ const Login = () => {
                   <br />
                   <br />
 
-                  <Button variant="outlined" onClick={() => console.log(login)}>Login</Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => console.log(login)}
+                    disabled={!login.password || !login.username}
+                  >Login</Button>
                 </CardContent>
               </Card>
             </Grid>
