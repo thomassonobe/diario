@@ -11,21 +11,11 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import './index.css'
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
-
-const Cadastro = () => {
-  const [cadastro, setCadastro] = React.useState({
+const Signin = () => {
+  const [signin, setSignin] = React.useState({
     username: '',
     password: ''
   })
-
 
   return (
     <>
@@ -51,8 +41,8 @@ const Cadastro = () => {
                     id="fullWidth"
                     label="Username"
                     variant="standard"
-                    onChange={(e) => setCadastro({ ...cadastro, username: e.target.value })}
-                    value={cadastro.username}
+                    onChange={(e) => setSignin({ ...signin, username: e.target.value })}
+                    value={signin.username}
                   />
 
                   <br />
@@ -64,8 +54,8 @@ const Cadastro = () => {
                     label="Senha"
                     variant="standard"
                     type="password"
-                    onChange={(e) => setCadastro({ ...cadastro, password: e.target.value })}
-                    value={cadastro.password}
+                    onChange={(e) => setSignin({ ...signin, password: e.target.value })}
+                    value={signin.password}
                   />
 
                   <br />
@@ -73,8 +63,8 @@ const Cadastro = () => {
 
                   <Button
                     variant="outlined"
-                    onClick={() => console.log(cadastro)}
-                    disabled={!cadastro.username || !cadastro.password}
+                    onClick={() => console.log(signin)}
+                    disabled={!signin.username || !signin.password}
                   >Cadastro</Button>
                 </CardContent>
               </Card>
@@ -90,4 +80,4 @@ const Cadastro = () => {
   );
 }
 
-export default Cadastro;
+export default Signin;

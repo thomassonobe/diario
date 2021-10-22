@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Drawer } from '@material-ui/core';
 import Logo from '../../../img/logo.png'
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { height } from '@material-ui/system';
 import { styled } from '@material-ui/styles';
 
@@ -42,7 +42,7 @@ export default function ButtonAppBar() {
             <MyLink to="/login">
               <Button color="inherit">Login</Button>
             </MyLink>
-            <MyLink to="/cadastro">
+            <MyLink to="/signin">
               <Button color="inherit">Cadastro</Button>
             </MyLink>
           </Toolbar>
