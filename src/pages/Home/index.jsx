@@ -9,6 +9,8 @@ import SadTear from '../../shared/components/Icons/SadTear';
 import MehBlank from '../../shared/components/Icons/MehBlank';
 import SmileBeam from '../../shared/components/Icons/SmileBeam';
 import SmileWink from '../../shared/components/Icons/SmileWink';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 
 const Home = () => {
   return (
@@ -30,6 +32,41 @@ const Home = () => {
 
         <br />
         <h2>Cores</h2>
+        <Box>
+          <Grid container spacing={1}>
+            <Grid item s={1}>
+              <div class="quadradoRed"></div>
+            </Grid>
+
+            <Grid item s={1}>
+              <div class="quadradoPink"></div>
+            </Grid>
+
+            <Grid item s={2}>
+              <div class="quadradoPurple"></div>
+            </Grid>
+
+            <Grid item s={2}>
+              <div class="quadradoDeepPurple"></div>
+            </Grid>
+
+            <Grid item s={2}>
+              <div class="quadradoIndigo"></div>
+            </Grid>
+
+            <Grid item s={2}>
+              <div class="quadradoBlue"></div>
+            </Grid>
+
+            <Grid item s={2}>
+              <div class="quadradoCyan"></div>
+            </Grid>
+
+            <Grid item s={2}>
+              <div class="quadradoTeal"></div>
+            </Grid>
+          </Grid>
+        </Box>
 
         <br />
         <h2>Humores</h2>
