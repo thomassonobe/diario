@@ -24,7 +24,7 @@ const Routes = () => (
       <Route exact path="/" component={Home} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/signin" component={Signin} />
-      <Route exact path="/dashboard" component={Dashboard} /> //migrar para private route
+      <Route exact path="/dashboard" component={Dashboard} />
     </Switch>
   </BrowserRouter>
 );

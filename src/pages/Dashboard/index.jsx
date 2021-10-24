@@ -5,7 +5,6 @@ import Card from './components/Card'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 // import TabPanel from "@material-ui/lab/TabPanel";
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Gatinho from "../../img/hello.png"
 import './index.css'

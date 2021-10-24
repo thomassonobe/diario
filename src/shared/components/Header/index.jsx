@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button';
 import { Drawer } from '@material-ui/core';
 import Logo from '../../../img/logo.png'
 import { Link } from "react-router-dom";
-import { height } from '@material-ui/system';
 import { styled } from '@material-ui/styles';
 
 const MyNavBar = styled(AppBar)({
