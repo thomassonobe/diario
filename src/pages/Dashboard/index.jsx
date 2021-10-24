@@ -21,7 +21,7 @@ const data = [
     title: "Titulo do Diário",
     date: new Date(),
     dailyNote: "I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.",
-    humor: 0
+    humor: 1
   },
   {
     title: "Titulo do Diário",

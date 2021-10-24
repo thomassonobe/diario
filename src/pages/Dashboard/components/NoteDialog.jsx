@@ -77,11 +77,21 @@ const NoteDialog = ({ openDialog, setOpenDialog, daily }) => {
                 rows={4}
                 onChange={(e) => setDailyEdited({ ...dailyEdited, dailyNote: e.target.value })}
               />
+              <Select
+                value={dailyEdited.humor}
+                onChange={(e) => setDailyEdited({ ...dailyEdited, humor: e.target.value })}
+              >
+                <MenuItem value={0}><SadTear /> Muito Baixo</MenuItem>
+                <MenuItem value={1}><Meh /> Baixo</MenuItem>
+                <MenuItem value={2}><MehBlank /> Médio</MenuItem>
+                <MenuItem value={3}><SmileBeam /> Bom</MenuItem>
+                <MenuItem value={4}><SmileWink /> Muito Bom</MenuItem>
+              </Select>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleClose}>Subscribe</Button>
+            <Button onClick={handleClose}>Cancelar</Button>
+            <Button onClick={handleClose}>Salvar</Button>
           </DialogActions>
         </>
       ) : (
