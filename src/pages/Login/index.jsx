@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { useHistory } from "react-router-dom";
 import './index.css';
+import { validatePassword } from '../../shared/utils';
 
 const Login = () => {
   const [login, setLogin] = React.useState({
@@ -57,6 +58,8 @@ const Login = () => {
                     type="password"
                     onChange={(e) => { setLogin({ ...login, password: e.target.value }) }}
                     value={login.password}
+                    error={validatePassword(login.password)}
+                    helperText="Sua senha deve conter pelo menos 8 caracteres entre números, maiúsculos e minúsculos"
                   />
 
                   <br />
