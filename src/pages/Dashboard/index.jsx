@@ -9,6 +9,7 @@ import Box from '@material-ui/core/Box';
 import Gatinho from "../../img/hello.png"
 import './index.css'
 import Footer from '../../shared/components/Footer'
+import { Typography } from '@material-ui/core';
 
 // Exemplo das TabPanel
 // <TabPanel value="1">Item One</TabPanel>
@@ -47,7 +48,25 @@ const dataDailys = [
     humor: 0
   }
 ]
+const TabPanel = (props) => {
+  const { children, value, index, ...other } = props;
 
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
 const Dashboard = () => {
   const [value, setValue] = React.useState(0);
 

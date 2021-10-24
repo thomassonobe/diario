@@ -5,9 +5,14 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import NoteDialog from './NoteDialog';
 
 const CardAnotacao = (props) => {
   const { title, dailyNote, humor } = props.daily
+  const [openDialog, setOpenDialog] = React.useState(false)
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
   return (
     <>
       <Card sx={{ minWidth: 275 }}>
@@ -28,12 +33,14 @@ const CardAnotacao = (props) => {
         </CardContent>
 
         <CardActions>
-          <Button size="small">Ver</Button>
-          <Button size="small">Editar</Button>
+          <Button size="small" onClick={handleClickOpen}>Ver</Button>
+          <Button size="small" onClick={handleClickOpen}>Editar</Button>
         </CardActions>
       </Card>
 
+
       <br />
+      <NoteDialog open={openDialog} setOpenDialog={setOpenDialog} />
     </>
   );
 }

@@ -45,3 +45,8 @@ img {
     width: 150px;
     margin-right: 1em;
 }
+
+footer{
+    position: fixed;
+    bottom: 0;
+}
