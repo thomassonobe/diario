@@ -6,12 +6,13 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import NoteDialog from './NoteDialog';
+import { selectIcon } from '../../../shared/utils';
 
 const CardAnotacao = (props) => {
   const { title, dailyNote, humor } = props.daily
-  const [openDialog, setOpenDialog] = React.useState(false)
-  const handleClickOpen = () => {
-    setOpenDialog(true);
+  const [openDialog, setOpenDialog] = React.useState({ open: false, edit: false })
+  const handleClickOpen = (edit) => {
+    setOpenDialog({ open: true, edit: edit })
   };
   return (
     <>
@@ -20,7 +21,7 @@ const CardAnotacao = (props) => {
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
               <Grid item s={1}>
-                <h3>{humor}</h3>
+                <h3>{selectIcon(humor)}</h3>
               </Grid>
               <Grid item s={1}>
                 <h3>{title}</h3>
@@ -31,16 +32,14 @@ const CardAnotacao = (props) => {
           <span>01/01/1999</span>
           <p>{dailyNote}</p>
         </CardContent>
-
         <CardActions>
-          <Button size="small" onClick={handleClickOpen}>Ver</Button>
-          <Button size="small" onClick={handleClickOpen}>Editar</Button>
+          <Button size="small" onClick={() => handleClickOpen(false)}>Ver</Button>
+          <Button size="small" onClick={() => handleClickOpen(true)}>Editar</Button>
         </CardActions>
       </Card>
 
-
       <br />
-      <NoteDialog open={openDialog} setOpenDialog={setOpenDialog} />
+      <NoteDialog openDialog={openDialog} setOpenDialog={setOpenDialog} daily={props.daily} />
     </>
   );
 }

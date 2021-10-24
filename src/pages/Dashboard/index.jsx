@@ -4,19 +4,13 @@ import Container from '@material-ui/core/Container';
 import Card from './components/Card'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-// import TabPanel from "@material-ui/lab/TabPanel";
 import Box from '@material-ui/core/Box';
 import Gatinho from "../../img/hello.png"
 import './index.css'
 import Footer from '../../shared/components/Footer'
 import { Typography } from '@material-ui/core';
 
-// Exemplo das TabPanel
-// <TabPanel value="1">Item One</TabPanel>
-// <TabPanel value="2">Item Two</TabPanel>
-// <TabPanel value="3">Item Three</TabPanel>
-
-const dataDailys = [
+const data = [
   {
     title: "Titulo do Diário",
     date: new Date(),
@@ -69,7 +63,7 @@ const TabPanel = (props) => {
 }
 const Dashboard = () => {
   const [value, setValue] = React.useState(0);
-
+  const [dataDailys] = React.useState(data);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

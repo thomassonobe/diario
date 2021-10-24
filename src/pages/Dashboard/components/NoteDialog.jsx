@@ -6,35 +6,100 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import PropTypes from 'prop-types';
+import Meh from '../../../shared/components/Icons/Meh';
+import SadTear from '../../../shared/components/Icons/SadTear';
+import MehBlank from '../../../shared/components/Icons/MehBlank';
+import SmileBeam from '../../../shared/components/Icons/SmileBeam';
+import SmileWink from '../../../shared/components/Icons/SmileWink';
+import { MenuItem, Select } from '@material-ui/core';
+import { selectIcon } from '../../../shared/utils';
+function IconContainer(props) {
+  const { value, ...other } = props;
+  return <span {...other}>{customIcons[value].icon}</span>;
+}
 
-const NoteDialog = ({ openDialog, setOpenDialog }) => {
+IconContainer.propTypes = {
+  value: PropTypes.number.isRequired,
+};
+
+const customIcons = [
+  {
+    icon: <SadTear />,
+    label: 'Very Dissatisfied',
+  },
+  {
+    icon: <Meh />,
+    label: 'Dissatisfied',
+  },
+  {
+    icon: <MehBlank />,
+    label: 'Neutral',
+  },
+  {
+    icon: <SmileBeam />,
+    label: 'Satisfied',
+  },
+  {
+    icon: <SmileWink />,
+    label: 'Very Satisfied',
+  },
+];
+
+
+
+const NoteDialog = ({ openDialog, setOpenDialog, daily }) => {
   const handleClose = () => {
-    setOpenDialog(false);
+    setOpenDialog({ ...openDialog, open: false });
   };
+  const [dailyEdited, setDailyEdited] = React.useState(daily)
 
   return (
-    <Dialog open={openDialog} onClose={handleClose}>
-      <DialogTitle>Subscribe</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          To subscribe to this website, please enter your email address here. We
-          will send updates occasionally.
-        </DialogContentText>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="name"
-          label="Email Address"
-          type="email"
-          fullWidth
-          variant="standard"
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleClose}>Subscribe</Button>
-      </DialogActions>
-    </Dialog>
+
+    <Dialog open={openDialog.open} onClose={handleClose} style={{ padding: '1em' }}>
+      {openDialog.edit ? (
+        <>
+          <DialogContent>
+            <DialogContentText>
+              <TextField
+                fullWidth
+                label="Titulo"
+                variant="standard"
+                value={dailyEdited.title}
+                onChange={(e) => setDailyEdited({ ...dailyEdited, title: e.target.value })}
+              />
+              <TextField
+                fullWidth
+                label="Anotação"
+                variant="standard"
+                value={dailyEdited.dailyNote}
+                multiline
+                rows={4}
+                onChange={(e) => setDailyEdited({ ...dailyEdited, dailyNote: e.target.value })}
+              />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleClose}>Subscribe</Button>
+          </DialogActions>
+        </>
+      ) : (
+        <>
+          <DialogTitle>{daily.title}{selectIcon(daily.humor)}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              {daily.dailyNote}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleClose}>Subscribe</Button>
+          </DialogActions>
+        </>
+      )}
+
+    </Dialog >
   );
 }
 

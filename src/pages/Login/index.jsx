@@ -2,7 +2,7 @@ import * as React from 'react';
 import Header from '../../shared/components/Header'
 import Footer from '../../shared/components/Footer'
 import Gatinho from "../../img/hello.png"
-import Container from '@material-ui/core/Container';
+import Container from '@mui/material/Container';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
