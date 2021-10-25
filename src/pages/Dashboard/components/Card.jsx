@@ -11,9 +11,11 @@ import { selectIcon } from '../../../shared/utils';
 const CardAnotacao = (props) => {
   const { title, dailyNote, humor } = props.daily
   const [openDialog, setOpenDialog] = React.useState({ open: false, edit: false })
+
   const handleClickOpen = (edit) => {
     setOpenDialog({ open: true, edit: edit })
   };
+
   return (
     <>
       <Card sx={{ minWidth: 275 }}>

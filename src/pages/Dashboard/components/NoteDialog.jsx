@@ -100,6 +100,7 @@ const NoteDialog = ({ openDialog, setOpenDialog, daily }) => {
           <DialogContent>
             <DialogContentText>
               {daily.dailyNote}
+              <br />
             </DialogContentText>
           </DialogContent>
           <DialogActions>
