@@ -1,4 +1,8 @@
 import * as React from 'react';
+import './index.css'
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import { styled } from '@material-ui/styles';
 import Header from '../../shared/components/Header'
 import Container from '@material-ui/core/Container';
 import NoteCard from './components/Card'
@@ -15,6 +19,13 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import SearchIcon from '@mui/icons-material/Search';
  
 const tagEncode = ts => ts.reduce((acc, t) => acc + (1 << t), 0)
+
+const MyFab = styled(Fab)({
+  position: 'fixed',
+  bottom: 90,
+  left: 16,
+  zIndex: 100
+});
 
 const Dashboard = ({auth, setAuth, history}) => {
   const [tab, setTab] = React.useState(0);
@@ -95,7 +106,7 @@ const Dashboard = ({auth, setAuth, history}) => {
             >
               {
                 moodIcons.map((Icon, i) =>
-                  <ToggleButton key={i} value={i}><Icon on={moodFilter === i}/></ToggleButton>)
+                  <ToggleButton key={i} value={i}><Icon on={moodFilter === i} /></ToggleButton>)
               }
             </ToggleButtonGroup>
             <br/>
@@ -106,13 +117,17 @@ const Dashboard = ({auth, setAuth, history}) => {
               {
                 colortags.map((c, i) =>
                   <ToggleButton key={i} value={i}>
-                    <div className="quadrado" style={{backgroundColor: c}}></div>
+                    <div className="quadrado" style={{ backgroundColor: c }}></div>
                   </ToggleButton>)
               }
             </ToggleButtonGroup>
           </Container>
         </Box>
+
       </Container>
+      <MyFab color="primary" aria-label="add">
+        <AddIcon />
+      </MyFab>
     </>
   );
 }
