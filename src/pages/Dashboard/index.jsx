@@ -1,56 +1,23 @@
 import * as React from 'react';
-import Header from '../../shared/components/Header'
-import Container from '@material-ui/core/Container';
-import Card from './components/Card'
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
-import Gatinho from "../../img/hello.png"
 import './index.css'
-import Footer from '../../shared/components/Footer'
 import { compareString } from '../../shared/utils';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import { styled } from '@material-ui/styles';
+import Header from '../../shared/components/Header'
+import Container from '@material-ui/core/Container';
+import NoteCard from './components/Card'
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Box from '@material-ui/core/Box';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import ToggleButton from '@mui/material/ToggleButton';
+import { Notes } from '../../services/notes';
+import { moodIcons } from '../../shared/components/Icons';
+import { colortags } from '../../shared/components/Colortags';
 
-const data = [
-  {
-    title: "dTitulo do Diário",
-    date: '25 10 2021',
-    dailyNote: "I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.",
-    humor: 0
-  },
-  {
-    title: "aTitulo do Diário",
-    date: '24 10 2021',
-    dailyNote: "I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.",
-    humor: 1
-  },
-  {
-    title: "Titulo do Diário",
-    date: '19 10 2021',
-    dailyNote: "I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.",
-    humor: 2
-  },
-  {
-    title: "zTitulo do Diário",
-    date: '31 10 2021',
-    dailyNote: "I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.",
-    humor: 3
-  },
-  {
-    title: "cTitulo do Diário",
-    date: '22 10 2021',
-    dailyNote: "I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.",
-    humor: 4
-  },
-  {
-    title: "bTitulo do Diário",
-    date: '30 10 2021',
-    dailyNote: "I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.",
-    humor: 0
-  },
-]
+const tagEncode = ts => ts.reduce((acc, t) => acc + (1 << t), 0)
+const tagCheck = (a, b) => tagEncode(a) & tagEncode(b)
 
 const MyFab = styled(Fab)({
   position: 'fixed',
@@ -59,53 +26,93 @@ const MyFab = styled(Fab)({
   zIndex: 100
 });
 
-const Dashboard = () => {
-  const [value, setValue] = React.useState(0);
-  const [dataDailys] = React.useState(data);
-  const [filteredDailys, setFilteredDailys] = React.useState(data);
-  const [openNew, setOpenNew] = React.useState(false)
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    if (newValue === 0) {
-      setFilteredDailys(dataDailys.sort((a, b) => compareString(a.title, b.title)))
-    } else if (newValue === 1) {
-      setFilteredDailys(dataDailys.sort((a, b) => (a.humor < b.humor) ? 1 : ((b.humor < a.humor) ? -1 : 0)))
-    } else if (newValue === 2) {
-      setFilteredDailys(dataDailys.sort((a, b) => new Date(b.date) - new Date(a.date)))
-    }
-  };
+const Dashboard = ({ auth, setAuth }) => {
+  const [tab, setTab] = React.useState(0);
+  const [notes, setNotes] = React.useState([]);
+  const [filteredNotes, setFilteredNotes] = React.useState([]);
+  const [moodFilter, setMoodFilter] = React.useState(null);
+  const [tagFilter, setTagFilter] = React.useState([]);
 
   React.useEffect(() => {
-    handleChange()
-  }, [filteredDailys])
+    const filtered = notes
+      .filter(note => moodFilter === null || note.mood === moodFilter)
+      .filter(note => tagFilter.length === 0 || tagCheck(note.colortag, tagFilter))
+    if (tab === 0) {
+      setFilteredNotes(filtered.sort((a, b) => b.timestamp - a.timestamp))
+    } else if (tab === 1) {
+      setFilteredNotes(filtered.sort((a, b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0)))
+    } else if (tab === 2) {
+      setFilteredNotes(filtered.sort((a, b) => b.mood - a.mood))
+    }
+  }, [notes, moodFilter, tagFilter, tab])
+
+  React.useEffect(() => {
+    if (auth) {
+      Notes.get(auth)
+        .then(newNotes => {
+          setNotes(newNotes)
+        })
+        .catch(e => alert(e))
+    } else {
+      setNotes([])
+    }
+  }, [auth])
+
+  React.useEffect(() => { console.log(tagFilter) }, [tagFilter])
 
   return (
     <>
-      <Header></Header>
+      <Header auth={auth} setAuth={setAuth} />
       <Container>
-        <div class="center">
-          <img src={Gatinho} align="left" alt="" />
-          <br />
-          <h5>bem-vindo usuario!</h5>
-        </div>
         <Box sx={{ width: '100%' }}>
-          <Tabs value={value} onChange={(e, value) => handleChange(e, value)} centered>
-            <Tab value={0} label="Todos" />
-            <Tab value={1} label="Humor" />
-            <Tab value={2} label="Data" />
+          <Tabs value={tab} onChange={(_, value) => setTab(value)} centered>
+            <Tab value={0} label="Recentes" />
+            <Tab value={1} label="Título" />
+            <Tab value={2} label="Humor" />
           </Tabs>
         </Box>
       </Container>
-      <Container>
-        {filteredDailys.map((daily, index) => {
-          return (
-            <Card key={index} daily={daily} />)
-        })}
+      <Container sx={{ display: 'flex', flexDirection: 'row' }}>
+        <Box sx={{ flexGrow: 2 }}>
+          {filteredNotes.map((note, index) =>
+            <NoteCard key={index} note={note} auth={auth} setAuth={setAuth} />)}
+        </Box>
+        <Box sx={{ flexGrow: 1 }}>
+          <Container>
+            <h3>Filtrar por:</h3>
+            <h4>Humor</h4>
+            <ToggleButtonGroup
+              value={moodFilter}
+              exclusive
+              onChange={(_, v) => setMoodFilter(v)}
+            >
+              {
+                moodIcons.map((Icon, i) =>
+                  <ToggleButton key={i} value={i}><Icon on={moodFilter === i} /></ToggleButton>)
+              }
+            </ToggleButtonGroup>
+            <br />
+            <br />
+            <h4>Cor</h4>
+            <ToggleButtonGroup
+              value={tagFilter}
+              onChange={(_, v) => setTagFilter(v)}
+            >
+              {
+                colortags.map((c, i) =>
+                  <ToggleButton key={i} value={i}>
+                    <div className="quadrado" style={{ backgroundColor: c }}></div>
+                  </ToggleButton>)
+              }
+            </ToggleButtonGroup>
+          </Container>
+        </Box>
+
       </Container>
       <MyFab color="primary" aria-label="add">
         <AddIcon />
       </MyFab>
-      <Footer></Footer>
+      {/* <Footer></Footer> sem o footer nessa página acho que fica melhor tb */}
     </>
   );
 }

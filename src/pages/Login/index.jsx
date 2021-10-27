@@ -11,16 +11,27 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import './index.css';
 import { validatePassword } from '../../shared/utils';
+import { Auth } from '../../services/auth';
 
-const Login = () => {
-  const [login, setLogin] = React.useState({
-    username: '',
-    password: ''
-  })
+const Login = ({auth, setAuth}) => {
+  const [username, setUsername] = React.useState('')
+  const [password, setPassword] = React.useState('')
+
+  const handleClick = () => {
+    Auth.login(username, password)
+      .then(token => {
+        alert(`Olá, ${username}! Token de acesso recebido: ${token}.`)
+        setAuth({username, token})
+      })
+      .catch(res => {
+        alert("Ocorreu um erro")
+        console.log(res)
+      })
+  }
 
   return (
     <>
-      <Header />
+      <Header auth={auth} setAuth={setAuth} />
 
       <Container>
         <div class='center'>
@@ -42,8 +53,8 @@ const Login = () => {
                     id="fullWidth"
                     label="Username"
                     variant="standard"
-                    onChange={(e) => { setLogin({ ...login, username: e.target.value }) }}
-                    value={login.username}
+                    onChange={e => setUsername(e.target.value)}
+                    value={username}
                   />
 
                   <br />
@@ -55,9 +66,9 @@ const Login = () => {
                     label="Senha"
                     variant="standard"
                     type="password"
-                    onChange={(e) => { setLogin({ ...login, password: e.target.value }) }}
-                    value={login.password}
-                    error={validatePassword(login.password)}
+                    onChange={e => setPassword(e.target.value)}
+                    value={password}
+                    error={validatePassword(password)}
                     helperText="Sua senha deve conter pelo menos 8 caracteres entre números, maiúsculos e minúsculos"
                   />
 
@@ -66,8 +77,8 @@ const Login = () => {
 
                   <Button
                     variant="outlined"
-                    onClick={() => console.log(login)}
-                    disabled={!login.password || !login.username}
+                    onClick={handleClick}
+                    disabled={!password || !username}
                   >Login</Button>
                 </CardContent>
               </Card>

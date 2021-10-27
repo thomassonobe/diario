@@ -36,74 +36,8 @@ footer p {
     text-align: center;
 }
 
-.quadradoRed {
+.quadrado {
     line-height: 0;
     width: 30px;
     height: 30px;
-    border-style: solid;
-    border-color: #ef9a9a;
-    background-color: #ef9a9a;
-}
-
-.quadradoPink {
-    line-height: 0;
-    width: 30px;
-    height: 30px;
-    border-style: solid;
-    border-color: #f48fb1;
-    background-color: #f48fb1;
-}
-
-.quadradoPurple {
-    line-height: 0;
-    width: 30px;
-    height: 30px;
-    border-style: solid;
-    border-color: #ce93d8;
-    background-color: #ce93d8;
-}
-
-.quadradoDeepPurple {
-    line-height: 0;
-    width: 30px;
-    height: 30px;
-    border-style: solid;
-    border-color: #b39ddb;
-    background-color: #b39ddb;
-}
-
-.quadradoIndigo {
-    line-height: 0;
-    width: 30px;
-    height: 30px;
-    border-style: solid;
-    border-color: #9fa8da;
-    background-color: #9fa8da;
-}
-
-.quadradoBlue {
-    line-height: 0;
-    width: 30px;
-    height: 30px;
-    border-style: solid;
-    border-color: #90caf9;
-    background-color: #90caf9;
-}
-
-.quadradoCyan {
-    line-height: 0;
-    width: 30px;
-    height: 30px;
-    border-style: solid;
-    border-color: #80deea;
-    background-color: #80deea;
-}
-
-.quadradoTeal {
-    line-height: 0;
-    width: 30px;
-    height: 30px;
-    border-style: solid;
-    border-color: #80cbc4;
-    background-color: #80cbc4;
 }

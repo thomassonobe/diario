@@ -7,13 +7,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import PropTypes from 'prop-types';
-import Meh from '../../../shared/components/Icons/Meh';
-import SadTear from '../../../shared/components/Icons/SadTear';
-import MehBlank from '../../../shared/components/Icons/MehBlank';
-import SmileBeam from '../../../shared/components/Icons/SmileBeam';
-import SmileWink from '../../../shared/components/Icons/SmileWink';
+import { moodIcons, moodLabels } from '../../../shared/components/Icons';
 import { MenuItem, Select } from '@material-ui/core';
-import { selectIcon } from '../../../shared/utils';
+import { Notes } from '../../../services/notes'
+
+/*
+
+Isso aqui realmente não tá sendo usado, né?
+
 function IconContainer(props) {
   const { value, ...other } = props;
   return <span {...other}>{customIcons[value].icon}</span>;
@@ -46,16 +47,40 @@ const customIcons = [
   },
 ];
 
+ */
 
-
-const NoteDialog = ({ openDialog, setOpenDialog, daily }) => {
+const NoteDialog = ({ openDialog, setOpenDialog, note, auth, setAuth }) => {
   const handleClose = () => {
     setOpenDialog({ ...openDialog, open: false });
   };
-  const [dailyEdited, setDailyEdited] = React.useState(daily)
+  const [noteEdit, setNoteEdit] = React.useState(note)
+
+  const handleDelete = () => {
+    Notes.delete(auth, note)
+      .then(() => {
+        alert('Anotação apagada com sucesso.')
+        handleClose()
+        setAuth({...auth})
+      })
+      .catch(() => {
+        alert('Falha ao apagar a anotação.')
+      })
+  }
+
+  const handleSave = () => {
+    console.log(auth)
+    Notes.put(auth, noteEdit)
+      .then(() => {
+        alert('Anotação salva com sucesso.')
+        handleClose()
+        setAuth({...auth})
+      })
+      .catch(() => {
+        alert('Falha ao salvar a anotação.')
+      })
+  }  
 
   return (
-
     <Dialog open={openDialog.open} onClose={handleClose} style={{ padding: '1em' }}>
       {openDialog.edit ? (
         <>
@@ -65,47 +90,46 @@ const NoteDialog = ({ openDialog, setOpenDialog, daily }) => {
                 fullWidth
                 label="Titulo"
                 variant="standard"
-                value={dailyEdited.title}
-                onChange={(e) => setDailyEdited({ ...dailyEdited, title: e.target.value })}
+                value={noteEdit.title}
+                onChange={(e) => setNoteEdit({ ...noteEdit, title: e.target.value })}
               />
               <TextField
                 fullWidth
                 label="Anotação"
                 variant="standard"
-                value={dailyEdited.dailyNote}
+                value={noteEdit.desc}
                 multiline
                 rows={4}
-                onChange={(e) => setDailyEdited({ ...dailyEdited, dailyNote: e.target.value })}
+                onChange={(e) => setNoteEdit({ ...noteEdit, desc: e.target.value })}
               />
               <Select
-                value={dailyEdited.humor}
-                onChange={(e) => setDailyEdited({ ...dailyEdited, humor: e.target.value })}
+                value={noteEdit.mood}
+                onChange={(e) => setNoteEdit({ ...noteEdit, mood: e.target.value })}
               >
-                <MenuItem value={0}><SadTear /> Muito Baixo</MenuItem>
-                <MenuItem value={1}><Meh /> Baixo</MenuItem>
-                <MenuItem value={2}><MehBlank /> Médio</MenuItem>
-                <MenuItem value={3}><SmileBeam /> Bom</MenuItem>
-                <MenuItem value={4}><SmileWink /> Muito Bom</MenuItem>
+                {
+                  moodIcons.map((Icon, i) =>
+                    <MenuItem value={i}><Icon key={i} on={true} />{moodLabels[i]}</MenuItem>)
+                }
               </Select>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancelar</Button>
-            <Button onClick={handleClose}>Salvar</Button>
+            <Button onClick={handleSave}>Salvar</Button>
           </DialogActions>
         </>
       ) : (
         <>
-          <DialogTitle>{daily.title}{selectIcon(daily.humor)}</DialogTitle>
+          <DialogTitle>{noteEdit.title}{moodIcons[noteEdit.mood]}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              {daily.dailyNote}
+              {noteEdit.desc}
               <br />
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleClose}>Subscribe</Button>
+            <Button onClick={handleClose}>Fechar</Button>
+            <Button onClick={handleDelete}>Apagar</Button>
           </DialogActions>
         </>
       )}

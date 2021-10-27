@@ -11,16 +11,28 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { validatePassword } from '../../shared/utils';
 import './index.css'
+import { Auth } from '../../services/auth';
 
-const Signin = () => {
-  const [signin, setSignin] = React.useState({
-    username: '',
-    password: ''
-  })
+
+const Signin = ({auth, setAuth}) => {
+  const [username, setUsername] = React.useState('')
+  const [password, setPassword] = React.useState('')
+
+  const handleClick = () => {
+    console.log(auth)
+    Auth.signup(username, password)
+      .then(res => {
+        console.log(res)
+        alert(`Olá, ${res.data.username}! Cadastrado com sucesso.`)
+      })
+      .catch(err => {
+        alert(`Ocorreu um erro: ${err.response.data.message}`)
+      })
+  }
 
   return (
     <>
-      <Header />
+      <Header auth={auth} setAuth={setAuth} />
 
       <Container>
         <div class='center'>
@@ -42,8 +54,8 @@ const Signin = () => {
                     id="fullWidth"
                     label="Username"
                     variant="standard"
-                    onChange={(e) => setSignin({ ...signin, username: e.target.value })}
-                    value={signin.username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    value={username}
 
                   />
 
@@ -56,9 +68,9 @@ const Signin = () => {
                     label="Senha"
                     variant="standard"
                     type="password"
-                    onChange={(e) => setSignin({ ...signin, password: e.target.value })}
-                    value={signin.password}
-                    error={validatePassword(signin.password)}
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    error={validatePassword(password)}
                     helperText="Sua senha deve conter pelo menos 8 caracteres entre números, maiúsculos e minúsculos"
                   />
 
@@ -67,8 +79,8 @@ const Signin = () => {
 
                   <Button
                     variant="outlined"
-                    onClick={() => console.log(signin)}
-                    disabled={!signin.username || !signin.password}
+                    onClick={handleClick}
+                    disabled={!username || !password}
                   >Cadastro</Button>
                 </CardContent>
               </Card>
