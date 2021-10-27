@@ -1,10 +1,15 @@
-export default function signIn() {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve({
-        token: 'u18293u213983u192',
-        username: 'Thomas'
-      })
-    }, 2000)
-  });
+import api from './api';
+
+export class Auth {
+  static signup(username, password) {
+    return api.post('/signup', {username, password})
+  }
+
+  static login(username, password) {
+    return new Promise((resolve, reject) => {
+      api.get('/login', {auth: {username, password}})
+        .then(res => resolve(res.data.token))
+        .catch(reject)
+    })
+  }
 }

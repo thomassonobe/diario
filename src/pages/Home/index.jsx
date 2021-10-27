@@ -12,10 +12,10 @@ import SmileWink from '../../shared/components/Icons/SmileWink';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 
-const Home = () => {
+const Home = ({auth, setAuth}) => {
   return (
     <>
-      <Header/>
+      <Header auth={auth} setAuth={setAuth} />
       <Container>
         <br />
 

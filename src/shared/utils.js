@@ -10,6 +10,12 @@ export const validatePassword = (input) => {
   return !(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(input))
 }
 
-export const selectIcon = (index) => {
-  return index === 0 ? <SadTear /> : index === 1 ? <Meh /> : index === 2 ? <MehBlank /> : index === 3 ? <SmileBeam /> : index === 4 ? <SmileWink /> : null
-}
+const icons = [
+  <SadTear />,
+  <Meh />,
+  <MehBlank />,
+  <SmileBeam />,
+  <SmileWink />
+]
+
+export const selectIcon = (index) => icons[index] || null

@@ -18,15 +18,18 @@ import Dashboard from "./pages/Dashboard";
 //   />
 // );
 
-const Routes = () => (
-  <BrowserRouter>
-    <Switch>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/signin" component={Signin} />
-      <Route exact path="/dashboard" component={Dashboard} />
-    </Switch>
-  </BrowserRouter>
-);
+const Routes = () => {
+  const [auth, setAuth] = React.useState(null)
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" render={(props) => <Home {... props} auth={auth} setAuth={setAuth}/>} />
+        <Route exact path="/login" render={(props) => <Login {... props} auth={auth} setAuth={setAuth}/>} />
+        <Route exact path="/signin" render={(props) => <Signin {... props} auth={auth} setAuth={setAuth}/>} />
+        <Route exact path="/dashboard" render={(props) => <Dashboard {... props} auth={auth} setAuth={setAuth}/>} />
+      </Switch>
+    </BrowserRouter>
+  )
+}
 
 export default Routes;

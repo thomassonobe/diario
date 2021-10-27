@@ -8,8 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import NoteDialog from './NoteDialog';
 import { selectIcon } from '../../../shared/utils';
 
-const CardAnotacao = (props) => {
-  const { title, dailyNote, humor } = props.daily
+const NoteCard = ({note, auth, setAuth}) => {
+  const {timestamp, title, desc, mood, colortag} = note
   const [openDialog, setOpenDialog] = React.useState({ open: false, edit: false })
 
   const handleClickOpen = (edit) => {
@@ -23,7 +23,7 @@ const CardAnotacao = (props) => {
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
               <Grid item s={1}>
-                <h3>{selectIcon(humor)}</h3>
+                <h3>{selectIcon(mood)}</h3>
               </Grid>
               <Grid item s={1}>
                 <h3>{title}</h3>
@@ -31,8 +31,8 @@ const CardAnotacao = (props) => {
             </Grid>
           </Box>
 
-          <span>01/01/1999</span>
-          <p>{dailyNote}</p>
+          <span>{timestamp.toLocaleString().slice(0, -3)}</span>
+          <p>{desc}</p>
         </CardContent>
         <CardActions>
           <Button size="small" onClick={() => handleClickOpen(false)}>Ver</Button>
@@ -41,9 +41,10 @@ const CardAnotacao = (props) => {
       </Card>
 
       <br />
-      <NoteDialog openDialog={openDialog} setOpenDialog={setOpenDialog} daily={props.daily} />
+      <NoteDialog openDialog={openDialog} setOpenDialog={setOpenDialog} note={note}
+        auth={auth} setAuth={setAuth}/>
     </>
   );
 }
 
-export default CardAnotacao;
+export default NoteCard;

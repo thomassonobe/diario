@@ -19,7 +19,7 @@ const MyLink = styled(Link)({
   textDecoration: 'none'
 })
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar({auth, setAuth}) {
   const [open, setOpen] = React.useState(false)
   const toggleDrawer = (newOpen) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -27,23 +27,37 @@ export default function ButtonAppBar() {
     }
     setOpen(newOpen);
   };
-
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
         <MyNavBar position="static">
           <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              <Link to="/">
-                <img src={Logo} sx={{ flexGrow: 1 }} alt="" />
-              </Link>
-            </Typography>
-            <MyLink to="/login">
-              <Button color="inherit">Login</Button>
-            </MyLink>
-            <MyLink to="/signin">
-              <Button color="inherit">Cadastro</Button>
-            </MyLink>
+            {
+              auth === null ?
+              <>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                  <Link to="/">
+                    <img src={Logo} sx={{ flexGrow: 1 }} alt="" />
+                  </Link>
+                </Typography>
+                <MyLink to="/login">
+                  <Button color="inherit">Login</Button>
+                </MyLink>
+                <MyLink to="/signin">
+                  <Button color="inherit">Cadastro</Button>
+                </MyLink>
+              </>
+              :
+              <>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                  <Link to="/dashboard">
+                    <img src={Logo} sx={{ flexGrow: 1 }} alt="" />
+                  </Link>
+                </Typography>
+                <Button color="inherit">Olá, {auth.username}!</Button>
+                <Button color="inherit" onClick={() => setAuth(null)}>Sair</Button>
+              </>
+            }
           </Toolbar>
         </MyNavBar>
       </Box>
