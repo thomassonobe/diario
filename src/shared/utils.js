@@ -13,3 +13,9 @@ export const validatePassword = (input) => {
 export const selectIcon = (index) => {
   return index === 0 ? <SadTear /> : index === 1 ? <Meh /> : index === 2 ? <MehBlank /> : index === 3 ? <SmileBeam /> : index === 4 ? <SmileWink /> : null
 }
+
+export const compareString = (a, b) => {
+  const x = a.toUpperCase(),
+    y = b.toUpperCase();
+  return x > y ? 1 : y > x ? -1 : 0;
+}

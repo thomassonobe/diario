@@ -8,8 +8,10 @@ import Box from '@material-ui/core/Box';
 import Gatinho from "../../img/hello.png"
 import './index.css'
 import Footer from '../../shared/components/Footer'
-import { Typography } from '@material-ui/core';
-import { useState } from 'react';
+import { compareString } from '../../shared/utils';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import { styled } from '@material-ui/styles';
 
 const data = [
   {
@@ -49,34 +51,23 @@ const data = [
     humor: 0
   },
 ]
-const TabPanel = (props) => {
-  const { children, value, index, ...other } = props;
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
+const MyFab = styled(Fab)({
+  position: 'fixed',
+  bottom: 90,
+  left: 16,
+  zIndex: 100
+});
+
 const Dashboard = () => {
   const [value, setValue] = React.useState(0);
   const [dataDailys] = React.useState(data);
   const [filteredDailys, setFilteredDailys] = React.useState(data);
-
+  const [openNew, setOpenNew] = React.useState(false)
   const handleChange = (event, newValue) => {
     setValue(newValue);
     if (newValue === 0) {
-      setFilteredDailys(dataDailys.sort((a, b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0)))
+      setFilteredDailys(dataDailys.sort((a, b) => compareString(a.title, b.title)))
     } else if (newValue === 1) {
       setFilteredDailys(dataDailys.sort((a, b) => (a.humor < b.humor) ? 1 : ((b.humor < a.humor) ? -1 : 0)))
     } else if (newValue === 2) {
@@ -111,6 +102,9 @@ const Dashboard = () => {
             <Card key={index} daily={daily} />)
         })}
       </Container>
+      <MyFab color="primary" aria-label="add">
+        <AddIcon />
+      </MyFab>
       <Footer></Footer>
     </>
   );
