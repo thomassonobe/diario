@@ -7,15 +7,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import PropTypes from 'prop-types';
-import Meh from '../../../shared/components/Icons/Meh';
-import SadTear from '../../../shared/components/Icons/SadTear';
-import MehBlank from '../../../shared/components/Icons/MehBlank';
-import SmileBeam from '../../../shared/components/Icons/SmileBeam';
-import SmileWink from '../../../shared/components/Icons/SmileWink';
+import { moodIcons, moodLabels } from '../../../shared/components/Icons';
 import { MenuItem, Select } from '@material-ui/core';
-import { selectIcon } from '../../../shared/utils';
 import { Notes } from '../../../services/notes'
 
+/*
+
+Isso aqui realmente não tá sendo usado, né?
 
 function IconContainer(props) {
   const { value, ...other } = props;
@@ -49,7 +47,7 @@ const customIcons = [
   },
 ];
 
-
+ */
 
 const NoteDialog = ({ openDialog, setOpenDialog, note, auth, setAuth }) => {
   const handleClose = () => {
@@ -108,11 +106,10 @@ const NoteDialog = ({ openDialog, setOpenDialog, note, auth, setAuth }) => {
                 value={noteEdit.mood}
                 onChange={(e) => setNoteEdit({ ...noteEdit, mood: e.target.value })}
               >
-                <MenuItem value={0}><SadTear />Péssimo</MenuItem>
-                <MenuItem value={1}><Meh />Ruim</MenuItem>
-                <MenuItem value={2}><MehBlank />Meh</MenuItem>
-                <MenuItem value={3}><SmileBeam />Bom</MenuItem>
-                <MenuItem value={4}><SmileWink />Ótimo</MenuItem>
+                {
+                  moodIcons.map((Icon, i) =>
+                    <MenuItem value={i}><Icon key={i} on={true} />{moodLabels[i]}</MenuItem>)
+                }
               </Select>
             </DialogContentText>
           </DialogContent>
@@ -123,7 +120,7 @@ const NoteDialog = ({ openDialog, setOpenDialog, note, auth, setAuth }) => {
         </>
       ) : (
         <>
-          <DialogTitle>{noteEdit.title}{selectIcon(noteEdit.mood)}</DialogTitle>
+          <DialogTitle>{noteEdit.title}{moodIcons[noteEdit.mood]}</DialogTitle>
           <DialogContent>
             <DialogContentText>
               {noteEdit.desc}

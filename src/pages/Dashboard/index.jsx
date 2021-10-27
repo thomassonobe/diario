@@ -5,87 +5,100 @@ import NoteCard from './components/Card'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
-import Gatinho from "../../img/hello.png"
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import ToggleButton from '@mui/material/ToggleButton';
 import './index.css'
 import Footer from '../../shared/components/Footer'
-import { Typography } from '@material-ui/core';
 import { Notes } from '../../services/notes';
-
-
-const TabPanel = (props) => {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
+import { moodIcons } from '../../shared/components/Icons';
+import { colortags } from '../../shared/components/Colortags';
+ 
+const tagEncode = ts => ts.reduce((acc, t) => acc + (1 << t), 0)
+const tagCheck = (a, b) => tagEncode(a) & tagEncode(b)
 
 const Dashboard = ({auth, setAuth}) => {
   const [tab, setTab] = React.useState(0);
   const [notes, setNotes] = React.useState([]);
   const [filteredNotes, setFilteredNotes] = React.useState([]);
+  const [moodFilter, setMoodFilter] = React.useState(null);
+  const [tagFilter, setTagFilter] = React.useState([]);
 
   React.useEffect(() => {
+    const filtered = notes
+      .filter(note => moodFilter === null || note.mood === moodFilter)
+      .filter(note => tagFilter.length === 0 || tagCheck(note.colortag, tagFilter))
     if (tab === 0) {
-      setFilteredNotes(notes.sort((a, b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0)))
+      setFilteredNotes(filtered.sort((a, b) => b.timestamp - a.timestamp))
     } else if (tab === 1) {
-      setFilteredNotes(notes.sort((a, b) => a.mood - b.mood))
+      setFilteredNotes(filtered.sort((a, b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0)))
     } else if (tab === 2) {
-      setFilteredNotes(notes.sort((a, b) => b.timestamp - a.timestamp))
+      setFilteredNotes(filtered.sort((a, b) => b.mood - a.mood))
     }
-  }, [tab])
+  }, [notes, moodFilter, tagFilter, tab])
 
   React.useEffect(() => {
     if (auth) {
       Notes.get(auth)
         .then(newNotes => {
           setNotes(newNotes)
-          setFilteredNotes(newNotes)
         })
         .catch(e => alert(e))
     } else {
       setNotes([])
-      setFilteredNotes([])
     }
   }, [auth])
+
+  React.useEffect(() => {console.log(tagFilter)}, [tagFilter])
 
   return (
     <>
       <Header auth={auth} setAuth={setAuth} />
       <Container>
-        {/* acho que fica melhor com a tela mais limpa pra ter espaço pras anotações */}
-        {/* <div class="center">
-          <img src={Gatinho} align="left" alt="" />
-          <br />
-          <h5>bem-vindo usuario!</h5>
-        </div> */}
         <Box sx={{ width: '100%' }}>
           <Tabs value={tab} onChange={(_, value) => setTab(value)} centered>
-            <Tab value={0} label="Todos" />
-            <Tab value={1} label="Humor" />
-            <Tab value={2} label="Data" />
+            <Tab value={0} label="Recentes" />
+            <Tab value={1} label="Título" />
+            <Tab value={2} label="Humor" />
           </Tabs>
         </Box>
       </Container>
-      <Container>
-        {
-          filteredNotes.map((note, index) => <NoteCard key={index} note={note}
-            auth={auth} setAuth={setAuth} />)
-        }
+      <Container sx={{display: 'flex', flexDirection: 'row'}}>
+        <Box sx={{flexGrow: 2}}>
+          {filteredNotes.map((note, index) =>
+              <NoteCard key={index} note={note} auth={auth} setAuth={setAuth} />)}
+        </Box>
+        <Box sx={{flexGrow: 1}}>
+          <Container>
+            <h3>Filtrar por:</h3>
+            <h4>Humor</h4>
+            <ToggleButtonGroup
+              value={moodFilter}
+              exclusive
+              onChange={(_, v) => setMoodFilter(v)}
+            >
+              {
+                moodIcons.map((Icon, i) =>
+                  <ToggleButton key={i} value={i}><Icon on={moodFilter === i}/></ToggleButton>)
+              }
+            </ToggleButtonGroup>
+            <br />
+            <br />
+            <h4>Cor</h4>
+            <ToggleButtonGroup
+              value={tagFilter}
+              onChange={(_, v) => setTagFilter(v)}
+            >
+              {
+                colortags.map((c, i) =>
+                  <ToggleButton key={i} value={i}>
+                    <div className="quadrado" style={{backgroundColor: c}}></div>
+                  </ToggleButton>)
+              }
+            </ToggleButtonGroup>
+          </Container>
+        </Box>
       </Container>
-      <Footer></Footer>
+      {/* <Footer></Footer> sem o footer nessa página acho que fica melhor tb */}
     </>
   );
 }

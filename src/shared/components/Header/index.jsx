@@ -50,11 +50,14 @@ export default function ButtonAppBar({auth, setAuth}) {
               :
               <>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                  <Link to="/dashboard">
+                  <Link to="/">
                     <img src={Logo} sx={{ flexGrow: 1 }} alt="" />
                   </Link>
                 </Typography>
                 <Button color="inherit">Olá, {auth.username}!</Button>
+                <MyLink to="/dashboard">
+                  <Button color="inherit">Anotações</Button>
+                </MyLink>
                 <Button color="inherit" onClick={() => setAuth(null)}>Sair</Button>
               </>
             }
