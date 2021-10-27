@@ -19,7 +19,7 @@ const MyLink = styled(Link)({
   textDecoration: 'none'
 })
 
-export default function ButtonAppBar({auth, setAuth}) {
+export default function ButtonAppBar({auth, setAuth, history}) {
   const [open, setOpen] = React.useState(false)
   const toggleDrawer = (newOpen) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -27,6 +27,12 @@ export default function ButtonAppBar({auth, setAuth}) {
     }
     setOpen(newOpen);
   };
+
+  const handleExit = () => {
+    setAuth(null)
+    history.push('/')
+  }
+  
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -58,7 +64,7 @@ export default function ButtonAppBar({auth, setAuth}) {
                 <MyLink to="/dashboard">
                   <Button color="inherit">Anotações</Button>
                 </MyLink>
-                <Button color="inherit" onClick={() => setAuth(null)}>Sair</Button>
+                <Button color="inherit" onClick={handleExit}>Sair</Button>
               </>
             }
           </Toolbar>

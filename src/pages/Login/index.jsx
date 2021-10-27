@@ -13,7 +13,7 @@ import './index.css';
 import { validatePassword } from '../../shared/utils';
 import { Auth } from '../../services/auth';
 
-const Login = ({auth, setAuth}) => {
+const Login = ({auth, setAuth, history}) => {
   const [username, setUsername] = React.useState('')
   const [password, setPassword] = React.useState('')
 
@@ -22,6 +22,7 @@ const Login = ({auth, setAuth}) => {
       .then(token => {
         alert(`Olá, ${username}! Token de acesso recebido: ${token}.`)
         setAuth({username, token})
+        history.push('/dashboard')
       })
       .catch(res => {
         alert("Ocorreu um erro")
@@ -31,7 +32,7 @@ const Login = ({auth, setAuth}) => {
 
   return (
     <>
-      <Header auth={auth} setAuth={setAuth} />
+      <Header history={history} auth={auth} setAuth={setAuth} />
 
       <Container>
         <div class='center'>

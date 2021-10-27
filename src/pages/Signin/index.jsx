@@ -14,7 +14,7 @@ import './index.css'
 import { Auth } from '../../services/auth';
 
 
-const Signin = ({auth, setAuth}) => {
+const Signin = ({auth, setAuth, history}) => {
   const [username, setUsername] = React.useState('')
   const [password, setPassword] = React.useState('')
 
@@ -22,8 +22,8 @@ const Signin = ({auth, setAuth}) => {
     console.log(auth)
     Auth.signup(username, password)
       .then(res => {
-        console.log(res)
-        alert(`Olá, ${res.data.username}! Cadastrado com sucesso.`)
+        alert(`Cadastrado com sucesso.`)
+        history.push('/login')
       })
       .catch(err => {
         alert(`Ocorreu um erro: ${err.response.data.message}`)
@@ -32,7 +32,7 @@ const Signin = ({auth, setAuth}) => {
 
   return (
     <>
-      <Header auth={auth} setAuth={setAuth} />
+      <Header history={history} auth={auth} setAuth={setAuth} />
 
       <Container>
         <div class='center'>
