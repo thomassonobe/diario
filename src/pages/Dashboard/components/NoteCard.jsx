@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { moodIcons } from '../../../shared/components/Icons';
-import { colortags } from '../../../shared/components/Colortags';
+import { ColortagsGrid } from '../../../shared/components/Colortags';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -36,12 +36,7 @@ const NoteCard = ({note, auth, setAuth}) => {
                   <h3>{title}</h3>
                 </Grid>
               </Grid>
-              <Grid container spacing={1} wrap='nowrap' sx={{ flex: 0 }}>
-                {colortag.map(c =>
-                  <Grid item>
-                    <Box className="quadrado" sx={{backgroundColor: colortags[c]}}></Box>
-                  </Grid>)}
-              </Grid>
+              <ColortagsGrid tags={colortag} />
             </Box>
 
             <span>{timestamp.toLocaleString().slice(0, -3)}</span>

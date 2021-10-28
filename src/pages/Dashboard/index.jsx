@@ -14,7 +14,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import './index.css';
 import { Notes } from '../../services/notes';
 import { moodIcons } from '../../shared/components/Icons';
-import { colortags } from '../../shared/components/Colortags';
+import { ColortagsSelector } from '../../shared/components/Colortags';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import SearchIcon from '@mui/icons-material/Search';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -164,14 +164,7 @@ const Dashboard = ({auth, setAuth, history}) => {
             <br/>
 
             <h4>Cor</h4>
-            <ToggleButtonGroup value={tagFilter} onChange={(_, v) => setTagFilter(v)}>
-              {
-                colortags.map((c, i) =>
-                  <ToggleButton key={i} value={i}>
-                    <div className="quadrado" style={{ backgroundColor: c }}></div>
-                  </ToggleButton>)
-              }
-            </ToggleButtonGroup>
+            <ColortagsSelector tags={tagFilter} setTags={setTagFilter} />
           </Container>
         </Box>
       </Container>
