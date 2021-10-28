@@ -21,12 +21,12 @@ h5 {
   overflow-y: scroll;
 }
 
-.notes-not-found {
+.no-notes {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.notes-not-found h2 {
+.no-notes h2 {
   text-align: center;
 }

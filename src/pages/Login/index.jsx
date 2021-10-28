@@ -12,22 +12,35 @@ import Button from '@material-ui/core/Button';
 import './index.css';
 import { validatePassword } from '../../shared/utils';
 import { Auth } from '../../services/auth';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 const Login = ({auth, setAuth, history}) => {
   const [username, setUsername] = React.useState('')
   const [password, setPassword] = React.useState('')
+  const [loading, setLoading] = React.useState(false)
+  const [failure, setFailure] = React.useState(false)
 
   const handleClick = () => {
+    setLoading(true)
     Auth.login(username, password)
       .then(token => {
-        alert(`Olá, ${username}! Token de acesso recebido: ${token}.`)
+        setLoading(false)
         setAuth({username, token})
         history.push('/dashboard')
       })
-      .catch(res => {
-        alert("Ocorreu um erro")
-        console.log(res)
+      .catch(err => {
+        setFailure(true)
+        setLoading(false)
       })
+  }
+
+  const handleClose = (_, reason) => {
+    if (reason === 'clickaway')
+      return
+    setFailure(false)
   }
 
   return (
@@ -36,9 +49,16 @@ const Login = ({auth, setAuth, history}) => {
 
       <Container>
         <div class='center'>
-          <img src={Gatinho} align='left' alt="" />
-          <br />
-          <h1 align='center'>diar.<span>io</span></h1>
+          {
+            loading ?
+            <CircularProgress />
+            :
+            <>
+            <img src={Gatinho} align='left' alt="" />
+            <br />
+            <h1 align='center'>diar.<span>io</span></h1>
+            </>
+          }
         </div>
 
         <Box sx={{ flexGrow: 1 }}>
@@ -52,7 +72,7 @@ const Login = ({auth, setAuth, history}) => {
                   <TextField
                     fullWidth
                     id="fullWidth"
-                    label="Username"
+                    label="Nome de usuário"
                     variant="standard"
                     onChange={e => setUsername(e.target.value)}
                     value={username}
@@ -89,6 +109,12 @@ const Login = ({auth, setAuth, history}) => {
           </Grid>
         </Box>
       </Container>
+
+      <Snackbar open={failure} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          Falha no login. Seu nome de usuário e senha estão incorretos.
+        </Alert>
+      </Snackbar>
 
       <Footer />
     </>

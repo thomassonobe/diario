@@ -12,22 +12,38 @@ import Button from '@material-ui/core/Button';
 import { validatePassword } from '../../shared/utils';
 import './index.css'
 import { Auth } from '../../services/auth';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const Signin = ({auth, setAuth, history}) => {
   const [username, setUsername] = React.useState('')
   const [password, setPassword] = React.useState('')
+  const [loading, setLoading] = React.useState(false)
+  const [success, setSuccess] = React.useState(false)
+  const [failure, setFailure] = React.useState(false)
+  const [errmsg, setErrmsg] = React.useState('')
 
   const handleClick = () => {
-    console.log(auth)
+    setLoading(true)
     Auth.signup(username, password)
-      .then(res => {
-        alert(`Cadastrado com sucesso.`)
-        history.push('/login')
+      .then(() => {
+        setSuccess(true)
+        setLoading(false)
+        setTimeout(() => history.push('/login'), 1100)
       })
       .catch(err => {
-        alert(`Ocorreu um erro: ${err.response.data.message}`)
+        setErrmsg(err.response.data.message)
+        setFailure(true)
+        setLoading(false)
       })
+  }
+
+  const handleClose = (set, reason) => {
+    if (reason === 'clickaway')
+      return
+    set(false)
   }
 
   return (
@@ -36,9 +52,16 @@ const Signin = ({auth, setAuth, history}) => {
 
       <Container>
         <div class='center'>
-          <img src={Gatinho} align='left' alt="" />
-          <br />
-          <h1 align='center'>diar.<span>io</span></h1>
+          {
+            loading ?
+            <CircularProgress />
+            :
+            <>
+            <img src={Gatinho} align='left' alt="" />
+            <br />
+            <h1 align='center'>diar.<span>io</span></h1>
+            </>
+          }
         </div>
 
         <Box sx={{ flexGrow: 1 }}>
@@ -52,7 +75,7 @@ const Signin = ({auth, setAuth, history}) => {
                   <TextField
                     fullWidth
                     id="fullWidth"
-                    label="Username"
+                    label="Nome de usuário"
                     variant="standard"
                     onChange={(e) => setUsername(e.target.value)}
                     value={username}
@@ -90,6 +113,18 @@ const Signin = ({auth, setAuth, history}) => {
           </Grid>
         </Box>
       </Container>
+
+      <Snackbar open={success} autoHideDuration={1000} onClose={(_, r) => handleClose(setSuccess, r)}>
+        <Alert onClose={(_, r) => handleClose(setSuccess, r)} severity="success" sx={{ width: '100%' }}>
+          Cadastro realizado com sucesso!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={failure} autoHideDuration={6000} onClose={(_, r) => handleClose(setFailure, r)}>
+        <Alert onClose={(_, r) => handleClose(setFailure, r)} severity="error" sx={{ width: '100%' }}>
+          Ocorreu um erro no cadastro: {errmsg}
+        </Alert>
+      </Snackbar>
 
       <Footer />
     </>
