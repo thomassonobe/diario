@@ -5,7 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { styled } from '@material-ui/styles';
 import Header from '../../shared/components/Header'
 import Container from '@material-ui/core/Container';
-import NoteCard from './components/Card'
+import NoteCard from './components/NoteCard'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
@@ -29,11 +29,10 @@ import ClearIcon from '@mui/icons-material/Clear';
  
 const tagEncode = ts => ts.reduce((acc, t) => acc + (1 << t), 0)
 
-// acho que colocar 1em pro left e bottom fica melhor
 const MyFab = styled(Fab)({
   position: 'fixed',
-  bottom: 90,
-  left: 16,
+  bottom: '1em',
+  left: '1em',
   zIndex: 100
 });
 
