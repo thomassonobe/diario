@@ -3,10 +3,8 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import NoteDialog from './NoteDialog';
 import { moodIcons } from '../../../shared/components/Icons';
 import { colortags } from '../../../shared/components/Colortags';
 import IconButton from '@mui/material/IconButton';
@@ -14,17 +12,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ReadNoteDialog from './ReadNoteDialog';
 import EditNoteDialog from './EditNoteDialog';
+import DeleteNoteDialog from './DeleteNoteDialog';
 
 
 const NoteCard = ({note, auth, setAuth}) => {
   const {timestamp, title, desc, mood, colortag} = note
   const [openView, setOpenView] = React.useState(false)
   const [openEdit, setOpenEdit] = React.useState(false)
+  const [openDelete, setOpenDelete] = React.useState(false)
   const MoodIcon = moodIcons[mood]
-
-  const handleDelete = () => {
-    console.log('vai apagar')
-  }
 
   return (
     <>
@@ -58,7 +54,7 @@ const NoteCard = ({note, auth, setAuth}) => {
           <IconButton sx={{marginLeft: 'auto'}} onClick={() => setOpenEdit(true)}>
             <EditIcon />
           </IconButton>
-          <IconButton onClick={handleDelete}>
+          <IconButton onClick={() => setOpenDelete(true)}>
             <DeleteIcon />
           </IconButton>
         </CardActions>
@@ -67,6 +63,8 @@ const NoteCard = ({note, auth, setAuth}) => {
       <br />
       <ReadNoteDialog open={openView} setOpen={setOpenView} note={note} />
       <EditNoteDialog open={openEdit} setOpen={setOpenEdit} note={note}
+        auth={auth} setAuth={setAuth}/>
+      <DeleteNoteDialog open={openDelete} setOpen={setOpenDelete} note={note}
         auth={auth} setAuth={setAuth}/>
     </>
   );
