@@ -23,7 +23,7 @@ const NoteCard = ({note, auth, setAuth}) => {
 
   return (
     <>
-      <Card sx={{ minWidth: 275 }}>
+      <Card sx={{ minWidth: 300 }}>
         <CardActionArea onClick={() => setOpenView(true)}>
           <CardContent>
             <Box sx={{ flexDirection: 'row', display: 'flex', alignItems: 'baseline' }}>

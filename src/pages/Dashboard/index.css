@@ -19,6 +19,7 @@ h5 {
   min-width: 50vw;
   height: 100%;
   overflow-y: scroll;
+  max-width: 600px;
 }
 
 .no-notes {
