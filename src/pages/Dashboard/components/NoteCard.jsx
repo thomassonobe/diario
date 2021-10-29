@@ -5,7 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import { moodIcons } from '../../../shared/components/Icons';
+import { MoodIcon } from '../../../shared/components/Moods';
 import { ColortagsGrid } from '../../../shared/components/Colortags';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -20,7 +20,6 @@ const NoteCard = ({note, auth, setAuth}) => {
   const [openView, setOpenView] = React.useState(false)
   const [openEdit, setOpenEdit] = React.useState(false)
   const [openDelete, setOpenDelete] = React.useState(false)
-  const MoodIcon = moodIcons[mood]
 
   return (
     <>
@@ -30,7 +29,7 @@ const NoteCard = ({note, auth, setAuth}) => {
             <Box sx={{ flexDirection: 'row', display: 'flex', alignItems: 'baseline' }}>
               <Grid container spacing={2} sx={{ flex: 1 }}>
                 <Grid item s={1}>
-                  <h3><MoodIcon on={true} /></h3>
+                  <h3><MoodIcon mood={mood} on={true} /></h3>
                 </Grid>
                 <Grid item s={1}>
                   <h3>{title}</h3>
@@ -56,11 +55,21 @@ const NoteCard = ({note, auth, setAuth}) => {
       </Card>
 
       <br />
-      <ReadNoteDialog open={openView} setOpen={setOpenView} note={note} />
-      <EditNoteDialog open={openEdit} setOpen={setOpenEdit} note={note}
-        auth={auth} setAuth={setAuth}/>
-      <DeleteNoteDialog open={openDelete} setOpen={setOpenDelete} note={note}
-        auth={auth} setAuth={setAuth}/>
+      {
+        openView ?
+        <ReadNoteDialog open={openView} setOpen={setOpenView} note={note} />
+        :
+        openEdit ?
+        <EditNoteDialog open={openEdit} setOpen={setOpenEdit} note={note}
+          auth={auth} setAuth={setAuth}/>
+        :
+        openDelete ?
+        <DeleteNoteDialog open={openDelete} setOpen={setOpenDelete} note={note}
+          auth={auth} setAuth={setAuth}/>
+        :
+        null
+      }
+      
     </>
   );
 }

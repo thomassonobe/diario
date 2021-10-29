@@ -4,7 +4,7 @@ import Footer from '../../shared/components/Footer'
 import Container from '@material-ui/core/Container';
 import Gatinho from "../../img/hello.png"
 import './index.css'
-import { moodIcons } from '../../shared/components/Icons';
+import { MoodIcon } from '../../shared/components/Moods';
 import { colortags } from '../../shared/components/Colortags'
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -43,7 +43,11 @@ const Home = ({auth, setAuth, history}) => {
         <br />
         <h2>Humores</h2>
         <div className="gridIcons">
-          {moodIcons.map((Icon, i) => <Icon on={true} key={i} />)}
+          <MoodIcon mood={0} on={true} />
+          <MoodIcon mood={1} on={true} />
+          <MoodIcon mood={2} on={true} />
+          <MoodIcon mood={3} on={true} />
+          <MoodIcon mood={4} on={true} />
         </div>
       </Container>
 

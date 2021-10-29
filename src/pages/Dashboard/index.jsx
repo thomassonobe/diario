@@ -9,11 +9,9 @@ import NoteCard from './components/NoteCard'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import ToggleButton from '@mui/material/ToggleButton';
 import './index.css';
 import { Notes } from '../../services/notes';
-import { moodIcons } from '../../shared/components/Icons';
+import { MoodSelector } from '../../shared/components/Moods';
 import { ColortagsSelector } from '../../shared/components/Colortags';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import SearchIcon from '@mui/icons-material/Search';
@@ -25,6 +23,7 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import ClearIcon from '@mui/icons-material/Clear';
+import EditNoteDialog from './components/EditNoteDialog';
 
  
 const tagEncode = ts => ts.reduce((acc, t) => acc + (1 << t), 0)
@@ -43,15 +42,16 @@ const sorters = [
 ]
 
 const Dashboard = ({auth, setAuth, history}) => {
-  const [tab, setTab] = React.useState(0);
-  const [notes, setNotes] = React.useState(null);
-  const [filteredNotes, setFilteredNotes] = React.useState([]);
-  const [query, setQuery] = React.useState('');
-  const [moodFilter, setMoodFilter] = React.useState(null);
-  const [tagFilter, setTagFilter] = React.useState([]);
-  const [dateFilter, setDateFilter] = React.useState(null);
-  const [loading, setLoading] = React.useState(true);
-  const [failure, setFailure] = React.useState(false);
+  const [tab, setTab] = React.useState(0)
+  const [notes, setNotes] = React.useState(null)
+  const [filteredNotes, setFilteredNotes] = React.useState([])
+  const [query, setQuery] = React.useState('')
+  const [moodFilter, setMoodFilter] = React.useState(null)
+  const [tagFilter, setTagFilter] = React.useState([])
+  const [dateFilter, setDateFilter] = React.useState(null)
+  const [loading, setLoading] = React.useState(true)
+  const [failure, setFailure] = React.useState(false)
+  const [openEdit, setOpenEdit] = React.useState(false)
 
   React.useEffect(() => {
     if (loading && notes === null)
@@ -139,7 +139,6 @@ const Dashboard = ({auth, setAuth, history}) => {
             <Stack direction="row" spacing={2} alignItems="center">
               <DatePicker
                 value={dateFilter}
-                inputFormat="DD/MM/yyyy"
                 onChange={(v) => setDateFilter(v)}
                 renderInput={(params) => <TextField {...params} />}
               />
@@ -150,16 +149,7 @@ const Dashboard = ({auth, setAuth, history}) => {
             <br/>
 
             <h4>Humor</h4>
-            <ToggleButtonGroup
-              value={moodFilter}
-              exclusive
-              onChange={(_, v) => setMoodFilter(v)}
-            >
-              {
-                moodIcons.map((Icon, i) =>
-                  <ToggleButton key={i} value={i}><Icon on={moodFilter === i} /></ToggleButton>)
-              }
-            </ToggleButtonGroup>
+            <MoodSelector mood={moodFilter} setMood={setMoodFilter} />
             <br/>
             <br/>
 
@@ -175,9 +165,12 @@ const Dashboard = ({auth, setAuth, history}) => {
         </Alert>
       </Snackbar>
       
-      <MyFab color="primary" aria-label="add">
+      <MyFab color="primary" aria-label="add" onClick={() => setOpenEdit(true)}>
         <AddIcon />
       </MyFab>
+
+      <EditNoteDialog open={openEdit} setOpen={setOpenEdit} note={null}
+        auth={auth} setAuth={setAuth}/>
     </>
   );
 }

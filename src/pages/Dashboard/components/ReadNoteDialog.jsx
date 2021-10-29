@@ -3,7 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { moodIcons } from '../../../shared/components/Icons';
+import { MoodIcon } from '../../../shared/components/Moods';
 import { ColortagsGrid } from '../../../shared/components/Colortags';
 import { styled } from '@material-ui/styles';
 import Box from '@material-ui/core/Box';
@@ -15,7 +15,6 @@ const NoteDialog = styled(Dialog)({
 
 const ReadNoteDialog = ({ open, setOpen, note }) => {
   const {timestamp, title, desc, mood, colortag} = note
-  const MoodIcon = moodIcons[mood]
 
   return (
     <NoteDialog
@@ -28,7 +27,7 @@ const ReadNoteDialog = ({ open, setOpen, note }) => {
         <Box sx={{ flexDirection: 'row', display: 'flex', alignItems: 'baseline' }}>
           <Grid container spacing={2} sx={{ flex: 1 }}>
             <Grid item s={1}>
-              <h3><MoodIcon on={true} /></h3>
+              <h3><MoodIcon on={true} mood={mood}/></h3>
             </Grid>
             <Grid item s={1}>
               <h3>{title}</h3>
