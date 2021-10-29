@@ -53,7 +53,7 @@ const EditNoteDialog = ({ open, setOpen, note, auth, setAuth }) => {
       return
     }
     setLoading(true)
-    const newNote = {id, title, desc, mood, colortag, timestamp: timestamp || new Date()}
+    const newNote = {id, timestamp, title, desc, mood, colortag}
     const method = (id === null || id === undefined) ? 'post' : 'put'
     console.log(newNote)
     Notes[method](auth, newNote)

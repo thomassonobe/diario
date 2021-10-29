@@ -168,9 +168,14 @@ const Dashboard = ({auth, setAuth, history}) => {
       <MyFab color="primary" aria-label="add" onClick={() => setOpenEdit(true)}>
         <AddIcon />
       </MyFab>
-
-      <EditNoteDialog open={openEdit} setOpen={setOpenEdit} note={null}
-        auth={auth} setAuth={setAuth}/>
+      
+      {
+        openEdit ?
+        <EditNoteDialog open={openEdit} setOpen={setOpenEdit} note={null}
+          auth={auth} setAuth={setAuth}/>
+        :
+        null
+      }
     </>
   );
 }
